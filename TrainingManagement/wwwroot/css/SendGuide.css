@@ -1,0 +1,454 @@
+* {
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* バーのcss */
+
+.navigation {
+    width: 100%;
+    height: 3.75rem;
+    background-color: #313C46;
+    color: white;
+    box-sizing: border-box;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigationName{
+    font-size: 1.125rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navigationName img{
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: .3125rem;
+}
+
+.navigationLogin{
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.navigationMsg{
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-right: .625rem;
+}
+
+.navigationUserName{
+    font-size: 1.25rem;
+    margin-right: .625rem;
+}
+
+.navigationBtn{
+    padding: 0.4rem 0.5rem;
+    background-color: #ee2400;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .3125rem;
+    cursor: pointer;
+}
+
+.navigationBtn:hover{
+    background-color: #ff0000;
+}
+
+/* テーブルのCSS */
+
+.tableWrapper{
+    width: 78.5625rem;
+    margin-left: 3.4375rem;
+    margin-top: 3.125rem;
+}
+
+.tableOperate{
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.25rem;
+
+}
+
+.tableTitle{
+    font-size: 1.5rem;
+}
+
+.tableTitleBtn{
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.tableTitleBtn div{
+    padding: 0.45rem 0.5rem;
+    background-color: #00ABEE;
+    color: white;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .3125rem;
+    margin-left: 1.25rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.tableTitleBtn div img{
+    width: 1rem;
+    height: 1rem;
+    margin-right: .3rem;
+}
+
+#test {
+    width: 100%;
+}
+
+.traineeTableTitle {
+    height: 1.25rem;
+}
+
+.blueBorder {
+    display: inline-block;
+    vertical-align: top;
+    width: .125rem;
+    height: .875rem;
+    margin-top: .1875rem;
+    background-color: #00ABEE;
+    margin-left: 1.8125rem;
+}
+
+.traineeShow {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 0.1875rem;
+    font-size: .875rem;
+    line-height: 0.875rem;
+    color: #0f121c;
+    margin-left: .9375rem;
+}
+
+.tableBtn{
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableBtn div{
+    padding: 0.3rem 0.543rem;
+    /* width: 4.375rem; */
+    font-size: .875rem;
+    /* height: 1.875rem; */
+    background-color: white; 
+    border: 1px solid #0f121c;
+    color: #0f121c;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: .3125rem;
+    cursor: pointer;
+}
+
+.personalSend:hover{
+    color: white;
+    background-color: #00ABEE;
+    border: 1px solid #00ABEE;
+}
+
+.personalSended{
+    cursor: not-allowed !important;
+}
+
+#add {
+    margin-top: 1.5rem;
+}
+
+#total {
+    display: inline-block;
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
+}
+
+#goPage {
+    display: inline-block;
+    font-size: 0.75rem;
+}
+
+.gotoThePage {
+    font-size: 0.8775rem;
+    vertical-align: top;
+    width: 1.6275rem;
+    height: 1.6275rem;
+    border-radius: 0.1875rem;
+    margin-left: 0.375rem;
+    margin-right: 0.375rem;
+    border: solid 0.5px #646f79;
+    text-align: center;
+}
+
+#goBtn {
+    cursor: pointer;
+    display: inline-block;
+    width: 2.875rem;
+    height: 1.625rem;
+    border-radius: 0.1875rem;
+    border: solid 0.5px #646f79;
+    text-align: center;
+    line-height: 1.625rem;
+    letter-spacing: 0.1px;
+    color: #232a40;
+    margin-left: 0.75rem;
+}
+
+#test_pt_outTab {
+    border: 0;
+    width: 100% !important;
+}
+
+#test_pt {
+    margin-top: 1.5rem;
+}
+
+.pagination {
+    font-size: 0.75rem;
+}
+
+.backBtn{
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: .3125rem;
+}
+
+.backToIndex{
+    background-color: #4ACA6D;
+    color: white;
+    font-size: 0.8rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+    cursor: pointer;
+    border-radius: .3125rem;
+    font-weight: bold;
+}
+
+.backToIndex:hover{
+    background-color: #4aca6cc4;
+}
+
+.backToIndex img{
+    width: 0.9rem;
+    height: 0.9rem;
+    margin-right: 0.3rem;
+    margin-top: 0.1rem;
+}
+
+/* ポップアップのCSS */
+
+.popupWindow{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    /* display: flex; */
+    /* display: -webkit-flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+.popupDiv{
+    width: 18.75rem;
+    height: 9.75rem;
+    background-color: white;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: .625rem;
+    box-sizing: border-box;
+    padding:0.8rem 1rem;
+}
+
+.popupMain{
+    font-size: 0.9rem;
+}
+
+.popupTitle{
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.popupTitle img{
+    width: 0.9rem;
+    height: 0.9rem;
+    cursor: pointer;
+}
+
+.popupBtn{
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+
+.popupBtn div{
+    width: 5.9375rem;
+    height: 2rem;
+    border-radius: .3125rem;
+    box-sizing: border-box;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.popupLogout{
+    background-color: #ff0000;
+    color: white;
+}
+
+.popupBack{
+    color: #0f121c;
+    border: 1.5px solid #0f121c;
+}
+
+/* endとresultポップアップのCSS */
+
+.resultPopupWindow,
+.endPopupWindow{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    /* display: flex; */
+    /* display: -webkit-flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+.resultPopupDiv,
+.endPopupDiv{
+    width: 18.75rem;
+    height: 9.75rem;
+    background-color: white;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: .625rem;
+    box-sizing: border-box;
+    padding:0.8rem 1rem;
+}
+
+.resultPopupTitle,
+.endPopupTitle{
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.resultPopupTitle img,
+.endPopupTitle img{
+    width: 0.9rem;
+    height: 0.9rem;
+    cursor: pointer;
+}
+
+.resultPopupBtn,
+.endPopupBtn{
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+
+.resultPopupBtn div,
+.endPopupBtn div{
+    width: 5.9375rem;
+    height: 2rem;
+    border-radius: .3125rem;
+    box-sizing: border-box;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.resultPopupfresh,
+.endPopupReport{
+    background-color: #00ABEE;
+    color: white;
+}
+
+.resultPopupBack,
+.endPopupBack{
+    color: #0f121c;
+    border: 1.5px solid #0f121c;
+}
+
+.messageBox{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: .3125rem;
+    display: none;
+    z-index: 999;
+}

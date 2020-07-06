@@ -1,0 +1,132 @@
+*{
+    margin:0;
+    padding:0;
+    list-style-type:none
+}
+
+body,html{
+    background-color:#f7f8f8;
+    width:100%;
+    height:100%;
+    position:relative
+}
+
+body{
+    background-image:url(../images/background.png);
+    background-size:100% 100%
+}
+
+.platform_div{
+    position:absolute;
+    top:18.5%;
+    left:20.5%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+.platform_div .platform_name{
+    font-size:2.9375rem;
+    margin-bottom:.75rem;
+}
+
+
+.login_window{
+    width: 23.5rem;
+    height: 22.25rem;
+    border-radius: 10px;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 3.125rem 3.75rem 3.125rem 3.75rem;
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.login_window .title{
+    width: 100%;
+    font-size: 1.375rem;
+    color: #232a40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_window .hit{
+    height: 1rem;
+    margin-top: 0.875rem;
+    font-size: .75rem;
+    color: #ff2500;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.login_window .input_div .user_name{
+    margin-top: 1.25rem;
+    box-sizing: border-box;
+    width: 100%;
+    height: 2.75rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid #cecece;
+    position: relative;
+}
+
+.login_window .input_div .password{
+    margin-top: 1.25rem;
+    box-sizing: border-box;
+    width: 100%;
+    height: 2.75rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid #cecece;
+    position: relative;
+}
+
+.login_window .input_div .user_name img,
+.login_window .input_div .password img{
+    width: 1rem;
+    height: 1rem;
+    margin-left: .9375rem;
+    margin-right: .9375rem;
+}
+
+.login_window .input_div .user_name input,
+.login_window .input_div .password input{
+    outline: 0;
+    border: 0;
+    font-size: .875rem;
+    color: #232a40;
+    width: 14.375rem;
+    height: 2.5rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.login_window .btn{
+    width: 100%;
+    height: 2.75rem;
+    background-color: #00abee;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .875rem;
+    color: #fff;
+    margin-top: 1.875rem;
+    cursor: pointer;
+}

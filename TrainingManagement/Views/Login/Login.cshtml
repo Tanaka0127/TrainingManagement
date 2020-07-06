@@ -1,0 +1,56 @@
+﻿@{Layout = "";}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="~/css/login.css">
+    <script src="~/lib/js/jquery.min.js"></script>
+    <script src="~/js/login.js"></script>
+    <title>研修管理システム</title>
+    <script>
+        $(function () {
+            var thisScreeWidth = $(window).width();
+            if (thisScreeWidth < 1200) {
+                thisScreeWidth = 1200;
+            }
+            var thisFontSize = 16 * (thisScreeWidth / 1366) + 'px';
+            $("html").css('font-size', thisFontSize);
+            $(window).resize(function () {
+                var thisWidth = $(window).width();
+                if (thisWidth < 1200) {
+                    thisWidth = 1200;
+                }
+                var thisSize = 16 * (thisWidth / 1366) + 'px';
+                $("html").css('font-size', thisSize);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="platform_div">
+        <div class="platform_name">研修管理システム</div>
+    </div>
+    <div class="login_window">
+        <div class="title">ログイン / User Login</div>
+        <div class="hit"></div>
+        <div class="input_div">
+            <div class="user_name">
+                <img src="~/images/user.png" class="icon">
+                <input maxlength="12" type="text" class="login_input">
+            </div>
+            <div class="password">
+                <img src="~/images/password.png" class="icon">
+                <input maxlength="12" type="password" class="password_input">
+            </div>
+        </div>
+        <div class="btn">ログイン</div>
+    </div>
+</body>
+
+</html>
