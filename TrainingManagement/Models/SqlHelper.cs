@@ -9,7 +9,7 @@ namespace TrainingManagement.Models
 
         private static string server = "localhost";
         private static string user = "root";
-        private static string password = "";
+        private static string password = "p@ssw0rd";
         private static string database = "training_managerment";
 
         public static MySqlConnection conn;
