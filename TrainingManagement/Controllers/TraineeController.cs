@@ -159,5 +159,14 @@ namespace TrainingManagement.Controllers
             return json;
         }
 
+        /// <summary>
+        /// 研修詳細画面
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Guide()
+        {
+            return View();
+        }
+
     }
 }

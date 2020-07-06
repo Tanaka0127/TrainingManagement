@@ -59,7 +59,7 @@ var Tools = {
         })
 
         $(".detailsMsg").click(function(e){
-            location.href = "/Trainee/Guide?no_training=" + no_training;
+            location.href = "/Trainee/Guide?no_training=" + Tools.getUrl().no_training;
         })
 
         $(".joiningBtn").click(function(e){

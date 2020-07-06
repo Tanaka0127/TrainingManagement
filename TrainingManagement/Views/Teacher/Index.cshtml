@@ -1,0 +1,141 @@
+﻿@{Layout = "";}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="~/lib/css/bsgrid.all.min.css">
+    <link rel="stylesheet" href="~/lib/css/pagination.css">
+    <link rel="stylesheet" href="~/css/TeacherIndex.css">
+    <script src="~/lib/js/jquery.min.js"></script>
+    <script src="~/lib/js/grid.zh-CN.min.js"></script>
+    <script src="~/lib/js/bsgrid.all.min.js"></script>
+    <script src="~/lib/js/adapter.js"></script>
+    <script src="~/lib/js/jquery.pagination.js"></script>
+    <script src="~/js/TeacherIndex.js"></script>
+    <title>研修一覧</title>
+    <script>
+        $(function () {
+            var thisScreeWidth = $(window).width();
+            if (thisScreeWidth < 1200) {
+                thisScreeWidth = 1200;
+            }
+            var thisFontSize = 16 * (thisScreeWidth / 1366) + 'px';
+            $("html").css('font-size', thisFontSize);
+            $(window).resize(function () {
+                var thisWidth = $(window).width();
+                if (thisWidth < 1200) {
+                    thisWidth = 1200;
+                }
+                var thisSize = 16 * (thisWidth / 1366) + 'px';
+                $("html").css('font-size', thisSize);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="wrapper" id="wrapper">
+        <div class="navigation">
+            <div class="navigationName">
+                <img src="~/images/system.png">
+                <span>研修管理システム</span>
+            </div>
+            <div class="navigationLogin">
+                <div class="navigationMsg">
+                    <div class="navigationUserName">木村拓哉</div>
+                    <div>先生、ようこそ</div>
+                </div>
+                <div class="navigationBtn">ログアウト</div>
+            </div>
+        </div>
+        <div class="tableWrapper">
+            <div class="tableTitle">研修一覧</div>
+            <table id="test" lay-filter="test">
+                <tr>
+                    <th colspan="9" style="text-align:left;padding:0">
+                        <div class="trainingTableTitle">
+                            <div class="blueBorder"></div>
+                            <div class="trainingShow">研修一覧テーブル</div>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="background-color:#f9f9f9" w_render="trainingTable.nameFormat">研修名</th>
+                    <th style="background-color:#f9f9f9" w_index="cd_training">研修コード</th>
+                    <th style="background-color:#f9f9f9" w_index="dt_starttime">研修開催日</th>
+                    <th style="background-color:#f9f9f9" w_index="dt_closetime">研修終了日</th>
+                    <th style="background-color:#f9f9f9" w_index="su_people">受講人数</th>
+                    <th style="background-color:#f9f9f9" w_render="trainingTable.textFlgFormat">テキスト発注</th>
+                    <th style="background-color:#f9f9f9" w_index="nm_venue">研修場所</th>
+                    <th style="background-color:#f9f9f9" w_render="trainingTable.overFlgFormat">終了情報</th>
+                    <th style="background-color:#f9f9f9" width="30%" w_render="trainingTable.operating">
+                        操作
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="popupWindow">
+        <div class="popupDiv">
+            <div class="popupTitle"><img class="popupClose" src="~/images/close.png"></div>
+            <div class="popupMain">ログアウトしてもよろしいでしょうか</div>
+            <div class="popupBtn">
+                <div class="popupLogout">ログアウト</div>
+                <div class="popupBack">閉じる</div>
+            </div>
+        </div>
+    </div>
+    <div class="endPopupWindow">
+        <div class="endPopupDiv">
+            <div class="endPopupTitle"><img class="endPopupClose" src="~/images/close.png"></div>
+            <div class="endPopupMain"></div>
+            <div class="endPopupBtn">
+                <div class="endPopupReport">送信する</div>
+                <div class="endPopupBack">閉じる</div>
+            </div>
+        </div>
+    </div>
+    <div class="textPopupWindow">
+        <div class="textPopupDiv">
+            <div class="textPopupTitle"><img class="textPopupClose" src="~/images/close.png"></div>
+            <div class="textPopupMain">印刷所に発注しますか</div>
+            <div class="textPopupBtn">
+                <div class="textPopupOrder">発注する</div>
+                <div class="textPopupBack">閉じる</div>
+            </div>
+        </div>
+    </div>
+    <div class="messageBox"></div>
+    <div class="textHistoryWindow">
+        <div class="textHistoryDiv">
+            <div class="textHistoryTitle"><img class="textHistoryClose" src="~/images/close.png"></div>
+            <div class="textHistoryMain">
+                <div class="mainTitle">テキスト発注履歴</div>
+                <div class="mainContext">
+                    <div class="mainLi">
+                        <div class="mainLiLabel">発注者：</div>
+                        <div class="mainLiValue">木村拓哉</div>
+                    </div>
+                    <div class="mainLi">
+                        <div class="mainLiLabel">発注日：</div>
+                        <div class="mainLiValue">2020/06/26</div>
+                    </div>
+                    <div class="mainLi">
+                        <div class="mainLiLabel">発注数量：</div>
+                        <div class="mainLiValue">35</div>
+                    </div>
+                    <div class="mainLi">
+                        <div class="mainLiLabel">発注金額：</div>
+                        <div class="mainLiValue">13,463円</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+﻿@{Layout = "";}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="~/css/guide.css">
+    <script src="~/lib/js/jquery.min.js"></script>
+    <script src="~/js/guide.js"></script>
+    <title>研修詳細</title>
+    <script>
+        $(function () {
+            var thisScreeWidth = $(window).width();
+            if (thisScreeWidth < 1200) {
+                thisScreeWidth = 1200;
+            }
+            var thisFontSize = 16 * (thisScreeWidth / 1366) + 'px';
+            $("html").css('font-size', thisFontSize);
+            $(window).resize(function () {
+                var thisWidth = $(window).width();
+                if (thisWidth < 1200) {
+                    thisWidth = 1200;
+                }
+                var thisSize = 16 * (thisWidth / 1366) + 'px';
+                $("html").css('font-size', thisSize);
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="wrapper" id="wrapper">
+        <div class="navigation">
+            <div class="navigationName">
+                <img src="~/images/system.png">
+                <span>研修管理システム</span>
+            </div>
+            <div class="navigationLogin">
+                <div class="navigationMsg">
+                    <div class="navigationUserName">木村拓哉</div>
+                    <div>さん、ようこそ</div>
+                </div>
+                <div class="navigationBtn">ログアウト</div>
+            </div>
+        </div>
+        <div class="receiptMain">
+            <div class="receiptMainTitle">研修詳細</div>
+            <div class="receiptMainDetails">
+                <div class="receiptUl">
+                    <div class="receiptLabel">研修名:</div>
+                    <div class="receiptValue">研修1</div>
+                </div>
+                <div class="receiptUl">
+                    <div class="receiptLabel">研修コード:</div>
+                    <div class="receiptValue">KS0001</div>
+                </div>
+                <div class="receiptUl">
+                    <div class="receiptLabel">講師:</div>
+                    <div class="receiptValue">斉藤京子</div>
+                </div>
+                <div class="receiptUl">
+                    <div class="receiptLabel">受講費用:</div>
+                    <div class="receiptValue">7,000円</div>
+                </div>
+                <div class="receiptUl">
+                    <div class="receiptLabel">研修場所:</div>
+                    <div class="receiptValue">新宿3-27-5新宿高佐ビル501号室</div>
+                </div>
+                <div class="receiptUl">
+                    <div class="receiptLabel">研修内容:</div>
+                    <div class="receiptValue">○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修○○についての研修</div>
+                </div>
+            </div>
+            <div class="receiptMainBtn">
+                <div class="joiningBtn">申し込みはこちらから</div>
+                <div class="backToIndex">
+                    <img src="~/images/return.png">
+                    <span>メニューへ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popupWindow">
+        <div class="popupDiv">
+            <div class="popupTitle"><img class="popupClose" src="~/images/close.png"></div>
+            <div class="popupMain">ログアウトしてもよろしいでしょうか</div>
+            <div class="popupBtn">
+                <div class="popupLogout">ログアウト</div>
+                <div class="popupBack">閉じる</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
