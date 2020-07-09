@@ -38,7 +38,7 @@ namespace TrainingManagement.Controllers
             // List<User> list = new List<User>();
 
             SqlHelper sqlHelper = new SqlHelper();
-            MySqlDataReader reader = sqlHelper.GetCommand("select * from ma_training");
+            MySqlDataReader reader = sqlHelper.GetCommand("select * from ma_training ");
 
             while (reader.Read())
             {
@@ -153,6 +153,110 @@ namespace TrainingManagement.Controllers
                 Commons.SetResData(responseData, "200", al, "success");
             }
 
+            sqlHelper.CloseConn();
+
+            json = JsonConvert.SerializeObject(responseData);
+
+            return json;
+        }
+
+
+        /// <summary>
+        /// 研修の参加
+        /// </summary>
+        /// <param name="no_training">研修番号</param>
+        /// <param name="no_user">利用者番号</param>
+        /// <returns></returns>
+        [HttpPost]
+        public string JoinTraining(int no_training, int no_user)
+        {
+            String json = "";
+            ArrayList list = new ArrayList();
+            ResponseData responseData = new ResponseData();
+            Boolean succ_flg = true;
+
+            SqlHelper sqlHelper = new SqlHelper();
+            MySqlDataReader reader = sqlHelper.GetCommand("UPDATE tr_training_history SET flg_status=0 WHERE no_training='" + no_training + "' AND 	no_trainee='" + no_user + "'");
+
+            //取消状態中の時
+            if (reader.RecordsAffected == 0)
+            {
+                //研修履歴トランの中にデータがない時
+
+                //重複しない乱数を生成する
+                byte[] buffer = Guid.NewGuid().ToByteArray();
+                int iSeed = BitConverter.ToInt32(buffer, 0);
+                Random random = new Random(iSeed);
+
+                reader = sqlHelper.GetCommand("INSERT INTO tr_training_history (no_training_history,no_training,no_trainee,flg_status,flg_bill,flg_text,flg_training_guide,flg_completion,flg_completion_certificate) VALUES (" + random.Next() + "," + no_training + "," + no_user + ",0,0,0,0,0,0)");
+
+                //追加が失敗した時
+                if (reader.RecordsAffected == 0)
+                {
+                    succ_flg = false;
+                    Commons.SetResData(responseData, "400", list, "Update is fail");
+                }
+
+            }
+
+            //受講人数の追加
+            if (succ_flg)
+            {
+                reader = sqlHelper.GetCommand("UPDATE ma_training SET su_people=su_people+1 where no_training='" + no_training + "'");
+
+                //追加が失敗した時
+                if(reader.RecordsAffected == 0)
+                {
+                    Commons.SetResData(responseData, "400", list, "Update is fail");
+                }
+                else
+                {
+                    Commons.SetResData(responseData, "200", list, "success");
+                }
+            }
+
+            sqlHelper.CloseConn();
+
+            json = JsonConvert.SerializeObject(responseData);
+
+            return json;
+
+        }
+
+        [HttpPost]
+        public string CancelTraining(int no_training, int no_user)
+        {
+            String json = "";
+            ArrayList list = new ArrayList();
+            ResponseData responseData = new ResponseData();
+            Boolean succ_flg = true;
+
+            SqlHelper sqlHelper = new SqlHelper();
+            MySqlDataReader reader = sqlHelper.GetCommand("UPDATE tr_training_history SET flg_status=1 WHERE no_training='" + no_training + "' AND 	no_trainee='" + no_user + "'");
+
+            if (reader.RecordsAffected == 0)
+            {
+                succ_flg = false;
+                Commons.SetResData(responseData, "400", list, "Update is fail");
+            }
+
+            if (succ_flg)
+            {
+                reader = sqlHelper.GetCommand("UPDATE ma_training SET su_people=su_people-1 where no_training='" + no_training + "'");
+
+                if(reader.RecordsAffected == 0)
+                {
+                    Commons.SetResData(responseData, "400", list, "Update is fail");
+                }
+                else
+                {
+                    Commons.SetResData(responseData, "200", list, "success");
+                }
+            }
+
+
+
+            sqlHelper.CloseConn();
 
             json = JsonConvert.SerializeObject(responseData);
 
@@ -166,6 +270,53 @@ namespace TrainingManagement.Controllers
         public IActionResult Guide()
         {
             return View();
+        }
+
+        /// <summary>
+        /// 研修詳細画面のデータ
+        /// </summary>
+        /// <param name="no_training">研修番号</param>
+        /// <returns></returns>
+        public string SelectTrainingDetails(string no_training)
+        {
+            String json = "";
+            ArrayList list = new ArrayList();
+            ResponseData responseData = new ResponseData();
+
+            SqlHelper sqlHelper = new SqlHelper();
+            MySqlDataReader reader = sqlHelper.GetCommand("select * from ma_training where no_training='" + no_training + "'");
+
+            while (reader.Read())
+            {
+
+                Training training = new Training();
+
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    training.GetType().GetProperty(reader.GetName(i).Trim()).SetValue(training, reader[i]);
+                }
+
+                list.Add(training);
+            }
+
+            sqlHelper.CloseConn();
+
+            if (list.Count == 0)
+            {
+                Commons.SetResData(responseData, "400", list, "Not find training with this no_training");
+            }
+            else
+            {
+                string[] removeArr = new string[] {"flg_textorder", "su_people", "flg_completion", "flg_claim" };
+
+                ArrayList al = Commons.ResDataFormat(list, removeArr);
+
+                Commons.SetResData(responseData, "200", al, "success");
+            }
+
+            json = JsonConvert.SerializeObject(responseData);
+
+            return json;
         }
 
     }

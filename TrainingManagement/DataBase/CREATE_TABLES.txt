@@ -1,0 +1,8 @@
+ma_department.sql
+ma_training.sql
+ma_user.sql
+ma_training.sql
+tr_training_history.sql
+tr_bill.sql
+tr_text_order.sql
+foreign_key.sql

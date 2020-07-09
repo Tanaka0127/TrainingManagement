@@ -1,12 +1,10 @@
 window.onload = function () {
     trainingTable.init();
-    //初始化页面的一些点击事件
     Tools.clickInit();
 }
 
 var Tools = {
     timeout: null,
-    //获取url中的参数
     getUrl: function () {
         var url = decodeURI(decodeURI(location.search));
         var num = url.indexOf("?");
@@ -21,7 +19,6 @@ var Tools = {
         }
         return theRequest;
     },
-    //将金额转换为钱的显示
     fmoney: function (s, n) {
         n = n > 0 && n <= 20 ? n : 2;
         s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
@@ -44,7 +41,6 @@ var Tools = {
             Tools.timeout = null;
         }, 3000);
     },
-    //初始化一些页面上的点击事件
     clickInit: function () {
         $(".navigationBtn").click(function (e) {
             $(".popupWindow").css("display", "flex");
@@ -59,12 +55,11 @@ var Tools = {
         });
 
         $(".popupLogout").click(function (e) {
-            location.replace("login.html");
+            window.sessionStorage.removeItem("nm_user");
+            window.sessionStorage.removeItem("no_user");
+            location.replace("/");
         });
 
-        $(".navigationName").click(function (e) {
-            location.href = "TeacherIndex.html";
-        })
 
         $(".endPopupClose").click(function (e) {
             $(".endPopupWindow").hide();
@@ -89,124 +84,34 @@ var Tools = {
         $(".textPopupBack").click(function (e) {
             $(".textPopupWindow").hide();
         });
+
+        $(".textPopupOrder").click(function (e) {
+            trainingTable.sendTextOrder($(this).data("no"),$(this).data("su"));
+        })
     }
 };
 
 var trainingTable = {
-    // 表格对象
     gridObj: '',
-    localData: [{
-        "no_training": "10006587415",
-        "nm_training": "研修01研修01研修01研修01研修01研修01研修01",
-        "cd_training": "KS0001",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "10",
-        "flg_textorder": "0",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587416",
-        "nm_training": "研修02",
-        "cd_training": "KS0002",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "12",
-        "flg_textorder": "1",
-        "flg_completion": "1",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587417",
-        "nm_training": "研修03",
-        "cd_training": "KS0003",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "5",
-        "flg_textorder": "0",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修04",
-        "cd_training": "KS0004",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "87",
-        "flg_textorder": "0",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修05",
-        "cd_training": "KS0005",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "11",
-        "flg_textorder": "1",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修06",
-        "cd_training": "KS0006",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "99",
-        "flg_textorder": "0",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修07",
-        "cd_training": "KS0007",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "5",
-        "flg_textorder": "1",
-        "flg_completion": "1",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修08",
-        "cd_training": "KS0008",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "3",
-        "flg_textorder": "0",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修09",
-        "cd_training": "KS0009",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "11",
-        "flg_textorder": "0",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修10",
-        "cd_training": "KS0010",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "1111",
-        "flg_textorder": "0",
-        "flg_completion": "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }],
     init: function () {
-        // var car_park_id = sessionStorage.getItem("car_park_id");
+
+        //登録状態
+        if (window.sessionStorage.getItem("nm_user")) {
+            $(".navigationUserName").text(window.sessionStorage.getItem("nm_user"));
+        } else {
+            //登録されてない状態、ログイン画面に戻す
+            window.location.replace("/");
+        }
+
         trainingTable.gridObj = $.fn.bsgrid.init('test', {
-            // url: '/getMessage.do', //json文件url
+            url: '/Teacher/GetTrainingTableData',
             localData: trainingTable.localData,
-            ajaxType: 'post', //请求方式
-            pageSize: 9, //分页大小，默认20
+            ajaxType: 'post',
+            pageSize: 9,
             pageIncorrectTurnAlert: false,
             rowSelectedColor: false,
             otherParames: {
-
+                "no_teacher": window.sessionStorage.getItem("no_user")
             },
             pagingLittleToolbar: true,
             additionalAfterRenderGrid: function () {
@@ -226,22 +131,22 @@ var trainingTable = {
             trainingTable.gridObj.gotoPage(page);
         });
 
-        $("#goPage input").bind("input propertychange",function(e){
+        $("#goPage input").bind("input propertychange", function (e) {
             var page = trainingTable.gridObj.getTotalPages();
 
             var value = $("#goPage input").val();
 
-            value = value.replace(/[^\d]/g,'');
+            value = value.replace(/[^\d]/g, '');
 
             $("#goPage input").val(value);
 
-            if(value == ""){
+            if (value == "") {
                 return;
             }
 
-            if(value > page){
+            if (value > page) {
                 $("#goPage input").val(page);
-            }else if(value < 1){
+            } else if (value < 1) {
                 $("#goPage input").val("1");
             }
         });
@@ -255,18 +160,18 @@ var trainingTable = {
         var textDiv = "";
         var overDiv = "";
 
-        if(flg == "0"){
+        if (flg == "0") {
             textDiv = '<div class="textOrder" data-no="' + rowIndex + '" onclick="trainingTable.textOrder(this)">テキスト発注する</div>';
-        }else{
+        } else {
             textDiv = '<div class="textOrder" data-no="' + rowIndex + '" onclick="trainingTable.orderHistory(this)">テキスト発注記録</div>';
         }
 
-        if(overFlg == "0"){
+        if (overFlg == "0") {
             overDiv = '<div class="endReport" data-no="' + rowIndex + '" onclick="trainingTable.endReport(this)">終了報告</div>';
         }
 
         return '<div class="tableBtn"><div class="trainee" data-no="' + rowIndex + '" onclick="trainingTable.trainee(this)">受講者一覧</div>' + textDiv + overDiv + '</div>';
-        
+
     },
     nameFormat: function (record, rowIndex, colIndex, options) {
         var name = trainingTable.gridObj.getRecordIndexValue(record, 'nm_training');
@@ -284,7 +189,7 @@ var trainingTable = {
         return flg == "0" ? "未発注" : "発注済み";
     },
     overFlgFormat: function (record, rowIndex, colIndex, options) {
-        var flg = trainingTable.gridObj.getRecordIndexValue(record, 'flg_textorder');
+        var flg = trainingTable.gridObj.getRecordIndexValue(record, 'flg_completion');
         return flg == "0" ? "未終了" : "終了";
     },
     trainee: function (dom) {
@@ -293,7 +198,17 @@ var trainingTable = {
         var no_training = trainingTable.gridObj.getRecord(rowIndex).no_training;
         console.log(no_training);
 
-        location.href = "TeacherTrainee.html?no_training=" + no_training;
+        location.href = "/Teacher/Trainee?no_training=" + no_training;
+    },
+    startDateFormat: function (record, rowIndex, colIndex, options) {
+        var date = trainingTable.gridObj.getRecordIndexValue(record, 'dt_starttime');
+
+        return date.substr(0, 10);
+    },
+    endDateFormat: function (record, rowIndex, colIndex, options) {
+        var date = trainingTable.gridObj.getRecordIndexValue(record, 'dt_closetime');
+
+        return date.substr(0, 10);
     },
     endReport: function (dom) {
         var _this = $(dom);
@@ -310,22 +225,120 @@ var trainingTable = {
         var _this = $(dom);
         var rowIndex = _this.data('no');
         var no_training = trainingTable.gridObj.getRecord(rowIndex).no_training;
-        console.log(no_training);
 
-        $(".textPopupWindow").css("display", "flex");
-        $(".textPopupOrder").data("no", no_training);
+        var su_people = trainingTable.gridObj.getRecord(rowIndex).su_people;
 
+        if(su_people == 0){
+            Tools.messageBox("受講人数がないので場合は発注ができないです");
+        }else {
+            $(".textPopupWindow").css("display", "flex");
+            $(".textPopupOrder").data("no", no_training);
+            $(".textPopupOrder").data("su", su_people);
+        }
     },
     orderHistory: function(dom){
         var _this = $(dom);
         var rowIndex = _this.data('no');
         var no_training = trainingTable.gridObj.getRecord(rowIndex).no_training;
-        $(".textHistoryWindow").css("display", "flex");
+
+        var data = {
+            "no_training": no_training
+        }
+
+        this.orderHistoryAjax(data);
+
     },
     sendEndReport: function (data) {
-        console.log(data);
-        Tools.messageBox("終了報告を送信しました");
-        
-    }
 
+        var mdata = {
+            "no_training": data,
+        };
+
+        this.sendEndReportAjax(mdata);
+        
+    },
+    sendEndReportAjax: function (data) {
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Teacher/SendEndReport",
+            data: data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("終了報告書を発送しました");
+                    $(".endPopupWindow").hide();
+
+                    _this.gridObj.refreshPage();
+                } else if (res.status == "204") {
+                    Tools.messageBox("受講者全員の合否判定を先に判定してください");
+                } else {
+                    Tools.messageBox("発送が失敗しました");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    },
+    sendTextOrder: function (no_training, su_people) {
+
+        var data = {
+            "no_training": no_training,
+            "no_user": window.sessionStorage.getItem("no_user"),
+            "su_people": su_people
+        };
+
+        this.sendTextOrderAjax(data);
+    },
+    sendTextOrderAjax: function (data) {
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Teacher/SendTextOrder",
+            data: data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("テキストを発注しました");
+                    $(".textPopupWindow").hide();
+
+                    _this.gridObj.refreshPage();
+                } else {
+                    Tools.messageBox("テキスト発注が失敗しました");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    },
+    orderHistoryAjax: function (data) {
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Teacher/GetTextOrder",
+            data: data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    $(".order_name").text(window.sessionStorage.getItem("nm_user"));
+                    $(".order_date").text(res.data[0].dt_order.substr(0, 10));
+                    $(".order_num").text(res.data[0].su_order);
+                    $(".order_kin").text(Tools.fmoney(res.data[0].kin_order) + "円");
+
+                    $(".textHistoryWindow").css("display", "flex");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    }
 }

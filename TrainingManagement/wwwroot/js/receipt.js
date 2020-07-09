@@ -30,6 +30,18 @@ var Tools = {
         }
         return t.split("").reverse().join("");
     },
+    messageBox: function (msg) {
+        if (this.timeout != null) {
+            return;
+        }
+
+        $(".messageBox").show();
+        $(".messageBox").text(msg);
+        this.timeout = setTimeout(function () {
+            $(".messageBox").hide();
+            Tools.timeout = null;
+        }, 3000);
+    },
     clickInit: function() {
         $(".navigationBtn").click(function(e){
            $(".popupWindow").css("display","flex");
@@ -81,6 +93,12 @@ var Tools = {
         $(".endPopupReport").click(function(e){
             var flg = $(this).data("type");
 
+            if (flg == "join") {
+                receipt.joinTraining();
+            } else {
+                receipt.cancelTraining();
+            }
+
             console.log(flg);
         })
 
@@ -95,6 +113,10 @@ var Tools = {
 };
 
 var receipt = {
+    data: {
+        "no_training": Tools.getUrl().no_training,
+        "no_user": window.sessionStorage.getItem("no_user")
+    },
     init: function () {
 
         //登録状態
@@ -105,12 +127,9 @@ var receipt = {
             window.location.replace("/");
         }
 
-        var data = {
-            "no_training": Tools.getUrl().no_training,
-            "no_user": window.sessionStorage.getItem("no_user")
-        };
+        Tools.clickInit();
 
-        this.trainingAjax(data);
+        this.trainingAjax(this.data);
     },
     trainingAjax: function (data) {
 
@@ -133,7 +152,6 @@ var receipt = {
         })
     },
     dataFormat: function (res) {
-        console.log(res);
 
         $(".training_name").text(res.data[0].nm_training);
         $(".training_code").text(res.data[0].cd_training);
@@ -154,13 +172,72 @@ var receipt = {
             $(".joiningBtn").css("background-color", "red");
         } else {
             $(".joiningBtn").data("type", "join");
+            $(".joiningBtn").text("参加する");
+            $(".joiningBtn").css("background-color", "#00abee");
         }
 
         if (start_time <= now_time) {
             $(".joiningBtn").attr("class", "cantJionBtn");
         }
+    },
+    joinTraining: function () {
 
-        Tools.clickInit();
+        this.joinTrainingAjax(this.data);
+    },
+    joinTrainingAjax: function (data) {
+
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Trainee/JoinTraining",
+            data: data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("研修を参加しました。");
+                    $(".endPopupWindow").hide();
+
+                    _this.trainingAjax(_this.data);
+                } else {
+                    Tools.messageBox("参加が失敗しました");
+                }
+
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    },
+    cancelTraining: function () {
+
+        this.cancelTrainingAjax(this.data);
+    },
+    cancelTrainingAjax: function (data) {
+
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Trainee/CancelTraining",
+            data: data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("研修の参加を取消しました。");
+                    $(".endPopupWindow").hide();
+
+                    _this.trainingAjax(_this.data);
+                } else {
+                    Tools.messageBox("取消が失敗しました");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
     }
 
 }

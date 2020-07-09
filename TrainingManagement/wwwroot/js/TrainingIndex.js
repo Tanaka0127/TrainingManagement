@@ -1,11 +1,9 @@
 window.onload = function () {
     trainingTable.init();
-    //初始化页面的一些点击事件
     Tools.clickInit();
 }
 
 var Tools = {
-    //获取url中的参数
     getUrl: function () {
         var url = decodeURI(decodeURI(location.search));
         var num = url.indexOf("?");
@@ -20,7 +18,6 @@ var Tools = {
         }
         return theRequest;
     },
-    //将金额转换为钱的显示
     fmoney: function (s, n) {
         n = n > 0 && n <= 20 ? n : 2;
         s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
@@ -31,7 +28,6 @@ var Tools = {
         }
         return t.split("").reverse().join("");
     },
-    //初始化一些页面上的点击事件
     clickInit: function () {
         $(".navigationBtn").click(function (e) {
             $(".popupWindow").css("display", "flex");
@@ -55,7 +51,6 @@ var Tools = {
 };
 
 var trainingTable = {
-    // 表格对象
     gridObj: '',
     init: function () {
 
@@ -83,7 +78,6 @@ var trainingTable = {
             }
         });
 
-        //添加分页按钮
         var addHtml = '<td style="text-align:right"><div id="add"><div id="total">全部<span id="totalPage"></span>ページ/<span id="totalData"></span>行' +
             '</div><div id="goPage">第<input class="gotoThePage" type="text">ページ' +
             '<div id="goBtn">GO</div></div></div></td>';

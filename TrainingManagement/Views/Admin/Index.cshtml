@@ -9,13 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="~/lib/css/bsgrid.all.min.css">
     <link rel="stylesheet" href="~/lib/css/pagination.css">
-    <link rel="stylesheet" href="~/css/TeacherIndex.css">
+    <link rel="stylesheet" href="~/css/AdminIndex.css">
     <script src="~/lib/js/jquery.min.js"></script>
     <script src="~/lib/js/grid.zh-CN.min.js"></script>
     <script src="~/lib/js/bsgrid.all.min.js"></script>
     <script src="~/lib/js/adapter.js"></script>
     <script src="~/lib/js/jquery.pagination.js"></script>
-    <script src="~/js/TeacherIndex.js"></script>
+    <script src="~/js/AdminIndex.js"></script>
     <title>研修一覧</title>
     <script>
         $(function () {
@@ -47,7 +47,7 @@
             <div class="navigationLogin">
                 <div class="navigationMsg">
                     <div class="navigationUserName">木村拓哉</div>
-                    <div>先生、ようこそ</div>
+                    <div>管理者、ようこそ</div>
                 </div>
                 <div class="navigationBtn">ログアウト</div>
             </div>
@@ -66,13 +66,13 @@
                 <tr>
                     <th style="background-color:#f9f9f9" w_render="trainingTable.nameFormat">研修名</th>
                     <th style="background-color:#f9f9f9" w_index="cd_training">研修コード</th>
-                    <th style="background-color:#f9f9f9" w_render="trainingTable.startDateFormat" w_index="dt_starttime">研修開催日</th>
-                    <th style="background-color:#f9f9f9" w_render="trainingTable.endDateFormat" w_index="dt_closetime">研修終了日</th>
+                    <th style="background-color:#f9f9f9" w_render="trainingTable.startDateFormat">研修開催日</th>
+                    <th style="background-color:#f9f9f9" w_render="trainingTable.endDateFormat">研修終了日</th>
                     <th style="background-color:#f9f9f9" w_index="su_people">受講人数</th>
                     <th style="background-color:#f9f9f9" w_render="trainingTable.textFlgFormat">テキスト発注</th>
+                    <th style="background-color:#f9f9f9" w_render="trainingTable.claimFlgFormat">請求状態</th>
                     <th style="background-color:#f9f9f9" w_index="nm_venue">研修場所</th>
-                    <th style="background-color:#f9f9f9" w_render="trainingTable.overFlgFormat">終了情報</th>
-                    <th style="background-color:#f9f9f9" width="30%" w_render="trainingTable.operating">
+                    <th style="background-color:#f9f9f9" width="20%" w_render="trainingTable.operating">
                         操作
                     </th>
                 </tr>
@@ -99,43 +99,7 @@
             </div>
         </div>
     </div>
-    <div class="textPopupWindow">
-        <div class="textPopupDiv">
-            <div class="textPopupTitle"><img class="textPopupClose" src="~/images/close.png"></div>
-            <div class="textPopupMain">印刷所に発注しますか</div>
-            <div class="textPopupBtn">
-                <div class="textPopupOrder">発注する</div>
-                <div class="textPopupBack">閉じる</div>
-            </div>
-        </div>
-    </div>
     <div class="messageBox"></div>
-    <div class="textHistoryWindow">
-        <div class="textHistoryDiv">
-            <div class="textHistoryTitle"><img class="textHistoryClose" src="~/images/close.png"></div>
-            <div class="textHistoryMain">
-                <div class="mainTitle">テキスト発注履歴</div>
-                <div class="mainContext">
-                    <div class="mainLi">
-                        <div class="mainLiLabel">発注者：</div>
-                        <div class="mainLiValue order_name"></div>
-                    </div>
-                    <div class="mainLi">
-                        <div class="mainLiLabel">発注日：</div>
-                        <div class="mainLiValue order_date"></div>
-                    </div>
-                    <div class="mainLi">
-                        <div class="mainLiLabel">発注数量：</div>
-                        <div class="mainLiValue order_num"></div>
-                    </div>
-                    <div class="mainLi">
-                        <div class="mainLiLabel">発注金額：</div>
-                        <div class="mainLiValue order_kin"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>

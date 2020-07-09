@@ -1,6 +1,5 @@
-window.onload = function() {
-    //初始化页面的一些点击事件
-    Tools.clickInit();
+window.onload = function () {
+    guide.init();
 }
 
 var Tools = {
@@ -44,21 +43,74 @@ var Tools = {
             $(".popupWindow").hide();
         });
 
-
-        $(".popupLogout").click(function(e){
-            location.replace("login.html");
+        $(".popupLogout").click(function (e) {
+            window.sessionStorage.removeItem("nm_user");
+            window.sessionStorage.removeItem("no_user");
+            location.replace("/");
         });
 
-        $(".navigationName").click(function(e){
-            location.href = "TrainingIndex.html";
+        $(".navigationName").click(function (e) {
+            location.href = "/Trainee/Index";
         })
 
-        $(".backToIndex").click(function(e){
-            location.href = "TrainingIndex.html";
+        $(".backToIndex").click(function (e) {
+            location.href = "/Trainee/Index";
         })
 
-        $(".joiningBtn").click(function(e){
-            location.href = "receipt.html?no_training=" + Tools.getUrl().no_training;
+        $(".joiningBtn").click(function (e) {
+            location.href = "/Trainee/Receipt?no_training=" + Tools.getUrl().no_training;
         })
     }
 };
+
+var guide = {
+    init: function () {
+
+        var data = {
+            "no_training": Tools.getUrl().no_training
+        };
+
+        Tools.clickInit();
+
+        this.trainingDetailsAjax(data);
+
+    },
+    trainingDetailsAjax: function (data) {
+
+        //登録状態
+        if (window.sessionStorage.getItem("nm_user")) {
+            $(".navigationUserName").text(window.sessionStorage.getItem("nm_user"));
+        } else {
+            //登録されてない状態、ログイン画面に戻す
+            window.location.replace("/");
+        }
+
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Trainee/SelectTrainingDetails",
+            data: data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    _this.dataFormat(res);
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    },
+    dataFormat: function (res) {
+
+        $(".training_name").text(res.data[0].nm_training);
+        $(".training_code").text(res.data[0].cd_training);
+        $(".teacher_name").text(res.data[0].nm_teacher);
+        $(".training_money").text(Tools.fmoney(res.data[0].kin_training) + "円");
+        $(".training_venue").text(res.data[0].nm_venue);
+        $(".training_details").text(res.data[0].nm_content);
+
+    }
+}

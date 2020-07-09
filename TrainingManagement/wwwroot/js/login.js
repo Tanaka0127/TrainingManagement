@@ -72,9 +72,9 @@ var login = {
         if (flg == 0) {
             location.href = "/Trainee/Index";
         } else if (flg == 1) {
-
+            location.href = "/Teacher/Index";
         } else {
-
+            location.href = "/Admin/Index";
         }
     },
     clickInit: function () {

@@ -1,12 +1,10 @@
 window.onload = function () {
     traineeTable.init();
-    //初始化页面的一些点击事件
     Tools.clickInit();
 }
 
 var Tools = {
     timeout: null,
-    //获取url中的参数
     getUrl: function () {
         var url = decodeURI(decodeURI(location.search));
         var num = url.indexOf("?");
@@ -21,7 +19,6 @@ var Tools = {
         }
         return theRequest;
     },
-    //将金额转换为钱的显示
     fmoney: function (s, n) {
         n = n > 0 && n <= 20 ? n : 2;
         s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
@@ -44,7 +41,6 @@ var Tools = {
             Tools.timeout = null;
         }, 3000);
     },
-    //初始化一些页面上的点击事件
     clickInit: function () {
         $(".navigationBtn").click(function (e) {
             $(".popupWindow").css("display", "flex");
@@ -59,11 +55,13 @@ var Tools = {
         });
 
         $(".popupLogout").click(function (e) {
-            location.replace("login.html");
+            window.sessionStorage.removeItem("nm_user");
+            window.sessionStorage.removeItem("no_user");
+            location.replace("/");
         });
 
         $(".navigationName").click(function (e) {
-            location.href = "TeacherIndex.html";
+            location.href = "/Teacher/Index";
         })
 
         $(".endPopupClose").click(function (e) {
@@ -84,106 +82,84 @@ var Tools = {
 
         $(".endPopupReport").click(function (e) {
             // trainingTable.sendEndReport($(this).data("no"));
+
+            var type = $(this).data("no");
+
+            if (type == "guide") {
+                traineeTable.guideSend();
+            } else {
+                traineeTable.textSend();
+            }
         });
 
         $(".backToIndex").click(function (e) {
-            location.href = "TeacherIndex.html";
+            location.href = "/Teacher/Index";
         })
 
         $(".sendText").click(function (e) {
             $(".endPopupWindow").css("display", "flex");
-            $(".endPopupMain").text("テキストが送信されました");
+            $(".endPopupMain").text("テキスト発送しますか");
+            $(".endPopupReport").data("no", "text");
         })
 
         $(".sendGuide").click(function (e) {
             $(".endPopupWindow").css("display", "flex");
-            $(".endPopupMain").text("受講案内の送付が行われました");
+            $(".endPopupMain").text("受講案内を発送しますか");
+            $(".endPopupReport").data("no","guide")
         })
 
         $(".sendResult").click(function(e){
             $(".resultPopupWindow").css("display", "flex");
         })
+
+        $(".resultPopupfresh").click(function (e) {
+            traineeTable.sendPassArr();
+        })
     }
 };
 
 var traineeTable = {
-    // 表格对象
     gridObj: '',
     passArray:[],
     noPassArray:[],
-    localData: [{
-        "no_training_history": "11111111111",
-        "nm_training": "研修01",
-        "no_employee": "1006765543",
-        "nm_user": "瀬戸山京椰",
-        "nm_department": "開発部",
-        "mail": "kou.kin@ad-max.co.jp",
-        "flg_completion": "0",
-        "flg_training_guide": "0",
-        "flg_text": "0"
-    },{
-        "no_training_history": "2222222222",
-        "nm_training": "研修02",
-        "no_employee": "1006765543",
-        "nm_user": "瀬戸山京椰",
-        "nm_department": "開発部",
-        "mail": "kou.kin@ad-max.co.jp",
-        "flg_completion": "0",
-        "flg_training_guide": "0",
-        "flg_text": "0"
-    },{
-        "no_training_history": "3333333333",
-        "nm_training": "研修03",
-        "no_employee": "1006765543",
-        "nm_user": "瀬戸山京椰",
-        "nm_department": "開発部",
-        "mail": "kou.kin@ad-max.co.jp",
-        "flg_completion": "0",
-        "flg_training_guide": "0",
-        "flg_text": "0"
-    }, {
-        "no_training_history": "182736383",
-        "nm_training": "研修01",
-        "no_employee": "1006765543",
-        "nm_user": "瀬戸山京椰",
-        "nm_department": "開発部",
-        "mail": "kou.kin@ad-max.co.jp",
-        "flg_completion": "1",
-        "flg_training_guide": "1",
-        "flg_text": "1"
-    }, {
-        "no_training_history": "182736384",
-        "nm_training": "研修01",
-        "no_employee": "1006765543",
-        "nm_user": "瀬戸山京椰",
-        "nm_department": "開発部",
-        "mail": "kou.kin@ad-max.co.jp",
-        "flg_completion": "2",
-        "flg_training_guide": "0",
-        "flg_text": "0"
-    }],
     init: function () {
+
+        //登録状態
+        if (window.sessionStorage.getItem("nm_user")) {
+            $(".navigationUserName").text(window.sessionStorage.getItem("nm_user"));
+        } else {
+            //登録されてない状態、ログイン画面に戻す
+            window.location.replace("/");
+        }
+
         traineeTable.gridObj = $.fn.bsgrid.init('test', {
-            // url: '/getMessage.do', //json文件url
-            localData: traineeTable.localData,
-            ajaxType: 'post', //请求方式
-            pageSize: 8, //分页大小，默认20
+            url: '/Teacher/GetTraineeTableData', 
+            ajaxType: 'post',
+            pageSize: 8, 
             pageIncorrectTurnAlert: false,
             rowSelectedColor: false,
             otherParames: {
-
+                "no_training": Tools.getUrl().no_training
             },
             pagingLittleToolbar: true,
             additionalAfterRenderGrid: function () {
                 $("#totalPage").html(traineeTable.gridObj.getTotalPages());
                 $("#totalData").html(traineeTable.gridObj.getTotalRows());
 
-                var nm_training = traineeTable.gridObj.getRecord(0).nm_training;
-                $(".traineeShow").text(nm_training + "の受験者一覧");
+                if (traineeTable.gridObj.getTotalRows() != 0) {
+                    var nm_training = traineeTable.gridObj.getRecord(0).nm_training;
+                    $(".traineeShow").text(nm_training + "の受験者一覧");
+
+                    var flg_textorder = traineeTable.gridObj.getRecord(0).flg_textorder;
+                    if (flg_textorder == 0) {
+                        $(".sendText").hide();
+                    }
+                } else {
+                    $(".sendText").hide();
+                }
             }
         });
 
-        //添加分页按钮
         var addHtml = '<td style="text-align:right"><div id="add"><div id="total">全部<span id="totalPage"></span>ページ/<span id="totalData"></span>行' +
             '</div><div id="goPage">第<input class="gotoThePage" type="text">ページ' +
             '<div id="goBtn">GO</div></div></div></td>';
@@ -292,5 +268,94 @@ var traineeTable = {
                 return x == training_no;
             }),1);
         }
+    },
+    guideSend: function () {
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Teacher/SendGuide",
+            data: {
+                no_training: Tools.getUrl().no_training
+            },
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("受講案内を発送しました");
+                    $(".endPopupWindow").hide();
+
+                    _this.gridObj.refreshPage();
+                } else {
+                    Tools.messageBox("発送が失敗しました");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    },
+    textSend: function () {
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Teacher/SendText",
+            data: {
+                no_training: Tools.getUrl().no_training
+            },
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("テキストを発送しました");
+                    $(".endPopupWindow").hide();
+
+                    _this.gridObj.refreshPage();
+                } else {
+                    Tools.messageBox("発送が失敗しました");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
+    },
+    sendPassArr: function () {
+
+        console.log(this.passArray);
+        console.log(this.noPassArray);
+
+        var data = {
+            pass_array: this.passArray,
+            nopass_array: this.noPassArray
+        };
+
+        this.passArrayAjax(data);
+
+    },
+    passArrayAjax: function (data) {
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Teacher/sendPassArr",
+            data: data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("合否情報を更新しました");
+                    $(".resultPopupWindow").hide();
+
+                    _this.gridObj.refreshPage();
+                } else {
+                    Tools.messageBox("更新が失敗しました");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
     }
 }

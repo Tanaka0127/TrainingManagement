@@ -1,12 +1,10 @@
 window.onload = function () {
     trainingTable.init();
-    //初始化页面的一些点击事件
     Tools.clickInit();
 }
 
 var Tools = {
     timeout: null,
-    //获取url中的参数
     getUrl: function () {
         var url = decodeURI(decodeURI(location.search));
         var num = url.indexOf("?");
@@ -21,7 +19,6 @@ var Tools = {
         }
         return theRequest;
     },
-    //将金额转换为钱的显示
     fmoney: function (s, n) {
         n = n > 0 && n <= 20 ? n : 2;
         s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
@@ -44,7 +41,6 @@ var Tools = {
             Tools.timeout = null;
         }, 3000);
     },
-    //初始化一些页面上的点击事件
     clickInit: function () {
         $(".navigationBtn").click(function (e) {
             $(".popupWindow").css("display", "flex");
@@ -59,12 +55,10 @@ var Tools = {
         });
 
         $(".popupLogout").click(function (e) {
-            location.replace("login.html");
+            window.sessionStorage.removeItem("nm_user");
+            window.sessionStorage.removeItem("no_user");
+            location.replace("/");
         });
-
-        $(".navigationName").click(function (e) {
-            location.href = "AdminIndex.html";
-        })
 
         $(".endPopupClose").click(function (e) {
             $(".endPopupWindow").hide();
@@ -81,116 +75,21 @@ var Tools = {
 };
 
 var trainingTable = {
-    // 表格对象
     gridObj: '',
-    localData: [{
-        "no_training": "10006587415",
-        "nm_training": "研修01研修01研修01研修01研修01研修01研修01",
-        "cd_training": "KS0001",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "10",
-        "flg_textorder": "1",
-        "flg_claim" : "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587416",
-        "nm_training": "研修02",
-        "cd_training": "KS0002",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "12",
-        "flg_textorder": "1",
-        "flg_claim" : "1",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587417",
-        "nm_training": "研修03",
-        "cd_training": "KS0003",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "5",
-        "flg_textorder": "1",
-        "flg_claim" : "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修04",
-        "cd_training": "KS0004",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "87",
-        "flg_textorder": "1",
-        "flg_claim" : "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修05",
-        "cd_training": "KS0005",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "11",
-        "flg_textorder": "1",
-        "flg_claim" : "1",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修06",
-        "cd_training": "KS0006",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "99",
-        "flg_textorder": "1",
-        "flg_claim" : "1",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修07",
-        "cd_training": "KS0007",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "5",
-        "flg_textorder": "1",
-        "flg_claim" : "1",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修08",
-        "cd_training": "KS0008",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "3",
-        "flg_textorder": "1",
-        "flg_claim" : "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修09",
-        "cd_training": "KS0009",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "11",
-        "flg_textorder": "1",
-        "flg_claim" : "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }, {
-        "no_training": "10006587415",
-        "nm_training": "研修10",
-        "cd_training": "KS0010",
-        "dt_starttime": "2020/06/24",
-        "dt_closetime": "2020/06/24",
-        "su_people": "1111",
-        "flg_textorder": "1",
-        "flg_claim" : "0",
-        "nm_venue": "新宿3-27-5新宿高佐ビル501号室"
-    }],
     init: function () {
-        // var car_park_id = sessionStorage.getItem("car_park_id");
+
+        //登録状態
+        if (window.sessionStorage.getItem("nm_user")) {
+            $(".navigationUserName").text(window.sessionStorage.getItem("nm_user"));
+        } else {
+            //登録されてない状態、ログイン画面に戻す
+            window.location.replace("/");
+        }
+
         trainingTable.gridObj = $.fn.bsgrid.init('test', {
-            // url: '/getMessage.do', //json文件url
-            localData: trainingTable.localData,
-            ajaxType: 'post', //请求方式
-            pageSize: 9, //分页大小，默认20
+            url: '/Admin/GetTrainingTableData', 
+            ajaxType: 'post', 
+            pageSize: 9, 
             pageIncorrectTurnAlert: false,
             rowSelectedColor: false,
             otherParames: {
@@ -203,7 +102,6 @@ var trainingTable = {
             }
         });
 
-        //添加分页按钮
         var addHtml = '<td style="text-align:right"><div id="add"><div id="total">全部<span id="totalPage"></span>ページ/<span id="totalData"></span>行' +
             '</div><div id="goPage">第<input class="gotoThePage" type="text">ページ' +
             '<div id="goBtn">GO</div></div></div></td>';
@@ -253,13 +151,23 @@ var trainingTable = {
         var flg = trainingTable.gridObj.getRecordIndexValue(record, 'flg_claim');
         return flg == "0" ? "未請求" : "請求済み";
     },
+    startDateFormat: function (record, rowIndex, colIndex, options) {
+        var date = trainingTable.gridObj.getRecordIndexValue(record, 'dt_starttime');
+
+        return date.substr(0, 10);
+    },
+    endDateFormat: function (record, rowIndex, colIndex, options) {
+        var date = trainingTable.gridObj.getRecordIndexValue(record, 'dt_closetime');
+
+        return date.substr(0, 10);
+    },
     trainee: function (dom) {
         var _this = $(dom);
         var rowIndex = _this.data('no');
         var no_training = trainingTable.gridObj.getRecord(rowIndex).no_training;
-        console.log(no_training);
+        
 
-        location.href = "AdminTrainee.html?no_training=" + no_training;
+        location.href = "/Admin/Trainee?no_training=" + no_training;
     },
     nameFormat: function (record, rowIndex, colIndex, options) {
         var name = trainingTable.gridObj.getRecordIndexValue(record, 'nm_training');
@@ -283,16 +191,39 @@ var trainingTable = {
         $(".endPopupReport").data("no", no_training);
 
     },
-    textOrder: function (dom) {
-        var _this = $(dom);
-        var rowIndex = _this.data('no');
-        var no_training = trainingTable.gridObj.getRecord(rowIndex).no_training;
-        console.log(no_training);
-    },
     sendEndReport: function (data) {
-        console.log(data);
-        Tools.messageBox("請求書を発送しました");
-        
+
+        var mdata = {
+            "no_training": data,
+            "no_user": window.sessionStorage.getItem("no_user")
+        };
+
+        this.sendBillAjax(mdata);
+    },
+    sendBillAjax: function (data) {
+
+        var _this = this;
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/Admin/SendBill",
+            data:data,
+            success: function (res) {
+
+                if (res.status == "200") {
+                    Tools.messageBox("請求書を発送しました");
+                    $(".endPopupWindow").hide();
+
+                    _this.gridObj.refreshPage();
+                } else {
+                    Tools.messageBox("発送が失敗しました");
+                }
+            },
+            error: function (err) {
+                alert(err);
+            }
+        })
     }
 
 }

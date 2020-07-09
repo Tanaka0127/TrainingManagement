@@ -9,14 +9,14 @@ namespace TrainingManagement.Models
 
         private static string server = "localhost";
         private static string user = "root";
-        private static string password = "p@ssw0rd";
-        private static string database = "training_managerment";
+        private static string password = "passw0rd";
+        private static string database = "training_management";
 
         public static MySqlConnection conn;
 
         public static MySqlConnection GetConn()
         {
-            conn = new MySqlConnection("server=" + server + ";user=" + user + ";database=" + database + ";");
+            conn = new MySqlConnection("server=" + server + ";user=" + user + ";password=" + password + ";database=" + database + ";");
             conn.Open();
             return conn;
         }
